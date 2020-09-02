@@ -4,7 +4,7 @@ FROM golang:1.15 AS builder
 WORKDIR /
 
 RUN apt-get update \
-    && apt-get -y install make openssh-client ca-certificates && update-ca-certificates \
+    && apt-get -y install make openssh-client ca-certificates && update-ca-certificates
 
 ADD . / service/
 WORKDIR /service

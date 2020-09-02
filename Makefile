@@ -4,6 +4,8 @@ APP_ENTRY_POINT:=cmd/mailsender.go
 BUILD_OUT_DIR:=./
 COMMON_PATH	?= $(shell pwd)
 
+DOCKER_REGISTRY=andskur
+
 GOOS	:=
 GOARCH	:=
 ifeq ($(OS),Windows_NT)
@@ -75,14 +77,13 @@ update:
 
 image: GOOS =linux
 image: GOARCH =amd64
-image:
+image: build
 	docker build -t $(CONTAINER_IMAGE) .
 
 tag:
 	docker tag $(CONTAINER_IMAGE) $(DOCKER_REGISTRY)/$(APP):latest
 
 image_latest: image tag
-
 
 push: image tag
 	docker push $(DOCKER_REGISTRY)/$(APP):latest
