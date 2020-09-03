@@ -42,13 +42,11 @@ func MailHandler(sender *Smtp, fromMail string) func(w http.ResponseWriter, r *h
 			return
 		}
 
-		fmt.Println(req.Name)
-		fmt.Println(req.Email)
-		fmt.Println(req.Message)
+		msg := fmt.Sprintf("%s \n\n From %s %s", req.Message, req.Name, req.Email)
 
 		subj := fmt.Sprintf("Landing mail from %s", req.Name)
 
-		if err := sender.Send(fromMail, req.Email, subj, req.Message); err != nil {
+		if err := sender.Send(fromMail, fromMail, subj, msg); err != nil {
 			fmt.Println(err)
 
 			resp := &Response{
